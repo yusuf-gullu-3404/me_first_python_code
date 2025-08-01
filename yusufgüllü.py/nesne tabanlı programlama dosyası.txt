@@ -1,0 +1,431 @@
+Python'da Nesne Yönelimli Programlama (OOP),
+
+1. Sınıf (Class)
+Bir sınıf, nesnelerin özelliklerini ve davranışlarını tanımlayan bir şablondur.
+📌Örnek:
+
+
+class Araba:
+    def __init__(self, marka, model):
+        self.marka = marka
+        self.model = model
+📝 *Araba sınıfı, marka ve model bilgilerini tutan bir şablondur.
+
+2. Nesne (Object)
+Sınıflardan oluşturulan örneklere nesne denir.
+📌Örnek:
+
+
+araba1 = Araba("Toyota", "Corolla")
+print(araba1.marka)  # Toyota
+📝 *araba1, Araba sınıfından türetilmiş bir nesnedir.
+
+3. Yapıcı Metot (Constructor - __init__)
+Nesne oluşturulduğunda otomatik olarak çalışan metottur.
+�Örnek:
+
+
+class Ogrenci:
+    def __init__(self, isim, yas):
+        self.isim = isim
+        self.yas = yas
+
+ogrenci1 = Ogrenci("Ahmet", 20)
+print(ogrenci1.isim)  # Ahmet
+📝 *__init__ metodu, Ogrenci nesnesi oluşturulduğunda çağrılır ve özellikleri atar.
+
+4. Metotlar (Methods)
+Sınıflar içinde tanımlanan ve nesnelere özel işlevler sağlayan fonksiyonlardır.
+📌 **Örnek:
+
+
+class Kedi:
+    def __init__(self, isim):
+        self.isim = isim
+    
+    def miyavla(self):
+        return f"{self.isim} miyavladı!"
+
+kedi1 = Kedi("Pamuk")
+print(kedi1.miyavla())  # Pamuk miyavladı!
+📝 miyavla metodu, kedinin miyavlamasını sağlar.
+
+5. Kapsülleme (Encapsulation)
+Bazı verileri dışarıdan erişime kapatır, sadece belirli metotlarla erişime izin verir.
+📌 **ÖrnekÖrnek:
+
+
+class BankaHesabi:
+    def __init__(self, bakiye):
+        self.__bakiye = bakiye  # Gizli değişken
+
+    def bakiye_goruntule(self):
+        return self.__bakiye
+
+hesap = BankaHesabi(1000)
+print(hesap.bakiye_goruntule())  # 1000
+# print(hesap.__bakiye)  # Hata verir, çünkü gizli
+📝 *__bakiye, dışarıdan erişilemez; sadece bakiye_goruntule metodu ile okunabilir.
+
+6. Kalıtım (Inheritance)
+Bir sınıfın başka bir sınıftan özellik ve metot miras almasını sağlar.
+📌 Örnek:
+
+
+class Hayvan:
+    def ses_cikar(self):
+        return "Bir ses çıkardı"
+
+class Kedi(Hayvan):
+    def ses_cikar(self):
+        return "Miyav!"
+
+kedi = Kedi()
+print(kedi.ses_cikar())  # Miyav!
+📝 Kedi sınıfı, Hayvan sınıfından miras aldı ve ses_cikar metodunu değiştirdi.
+
+7. Çok Biçimlilik (Polymorphism)
+Aynı isimli metodun farklı sınıflarda farklı şekilde davranmasını sağlar.
+📌 Örnek:
+
+
+class Kus:
+    def ses_cikar(self):
+        return "Cik cik!"
+
+class Kopek:
+    def ses_cikar(self):
+        return "Hav hav!"
+
+def ses_test(hayvan):
+    print(hayvan.ses_cikar())
+
+kus = Kus()
+kopek = Kopek()
+
+ses_test(kus)   # Cik cik!
+ses_test(kopek) # Hav hav!
+📝 Farklı sınıflardaki ses_cikar metodu, nesneye göre farklı çalışır.
+
+8. Soyutlama (Abstraction)
+Gereksiz detayları gizleyerek sadece önemli işlevleri sunar.
+📌 Örnek:
+
+from abc import ABC, abstractmethod
+
+class Sekil(ABC):
+    @abstractmethod
+    def alan(self):
+        pass
+
+class Kare(Sekil):
+    def __init__(self, kenar):
+        self.kenar = kenar
+
+    def alan(self):
+        return self.kenar ** 2
+
+kare = Kare(4)
+print(kare.alan())  # 16
+📝 Sekil sınıfı soyut bir sınıftır ve alan metodu zorunlu olarak diğer sınıflarda tanımlanmalıdır.
+
+9. Statik Metotlar (Static Methods)
+Sınıfın nesne oluşturmadan çalıştırabileceği metotlardır.
+📌 Örnek:
+
+
+class Matematik:
+    @staticmethod
+    def kare_al(sayi):
+        return sayi ** 2
+
+print(Matematik.kare_al(5))  # 25
+📝 Statik metotlar nesne oluşturmadan doğrudan çağrılabilir.
+
+10. Sınıf Metotları (Class Methods)
+Sınıfın kendisine özgü işlemleri yapmak için kullanılır.
+📌 Örnek:
+
+
+class Arac:
+    marka = "Bilinmiyor"
+
+    @classmethod
+    def marka_degistir(cls, yeni_marka):
+        cls.marka = yeni_marka
+
+Arac.marka_degistir("BMW")
+print(Arac.marka)  # BMW
+📝 Sınıf metodları sınıf değişkenlerini değiştirmek için kullanılır.
+
+11. Özel Metotlar (Dunder Methods)
+Python'da __init__, __str__, __len__ gibi çift alt çizgi ile başlayan metotlardır.
+📌 Örnek:
+
+
+class Kitap:
+    def __init__(self, isim, sayfa):
+        self.isim = isim
+        self.sayfa = sayfa
+
+    def __str__(self):
+        return f"{self.isim}, {self.sayfa} sayfa"
+
+kitap = Kitap("Python", 300)
+print(kitap)  # Python, 300 sayfa
+📝 __str__ metodu, print(kitap) çağrıldığında ne yazılacağını belirler.
+
+12. Çoklu Kalıtım (Multiple Inheritance)
+Bir sınıfın birden fazla sınıftan miras almasıdır.
+📌 Örnek:
+
+
+class Canli:
+    def yasam(self):
+        return "Yaşıyor"
+
+class Bitki:
+    def fotosentez(self):
+        return "Fotosentez yapıyor"
+
+class Agac(Canli, Bitki):
+    pass
+
+agac = Agac()
+print(agac.yasam())  # Yaşıyor
+print(agac.fotosentez())  # Fotosentez yapıyor
+📝 Agac sınıfı hem Canli hem de Bitki sınıfından özellik alır.
+
+Sonuç
+OOP, yazılım projelerinde kod tekrarını azaltır, düzeni sağlar ve modüler bir yapı sunar.
+ Yukarıdaki kavramlar, Python’da nesne yönelimli programlama yapabilmeniz için gereken her şeyi kapsar. 🚀
+
+
+
+
+
+
+    TARİH İSLEMLERİ
+
+
+
+📌 **1. 1. datetime Modülü
+Python'daki en güçlü tarih-saat işlemleri için *datetime m
+
+📌 1.1 Şu Anki Tarih ve Saati Alma
+python
+Kopyala
+Düzenle
+from datetime import datetime
+
+simdi = datetime.now()
+print(simdi)  # Örn: 2025-03-03 15:30:45.123456
+📌 1.2 Yıl, Ay, Gün, Saat, Dakika, Saniye Çekme
+python
+Kopyala
+Düzenle
+print(simdi.year)   # Yıl
+print(simdi.month)  # Ay
+print(simdi.day)    # Gün
+print(simdi.hour)   # Saat
+print(simdi.minute) # Dakika
+print(simdi.second) # Saniye
+📌 1.3 Belirli Bir Tarih Oluşturma
+pytho
+Kopyala
+Düzenle
+tarih = datetime(2025, 5, 15, 14, 30, 0)
+print(tarih)  # 2025-05-15 14:30:00
+📌 1.4 Tarihi Formatlı Yazdırma (strftime)
+python
+Kopyala
+Düzenle
+print(simdi.strftime("%Y-%m-%d"))  # 2025-03-03
+print(simdi.strftime("%d/%m/%Y"))  # 03/03/2025
+print(simdi.strftime("%H:%M:%S"))  # 15:30:45
+print(simdi.strftime("%A"))        # Monday (Gün adı)
+📌 **Bazı Bazı strftime Kodları
+
+%Y → Yıl (2025)
+%m → Ay (03)
+%d → Gün (03)
+%H → Saat (24 saat formatında)
+%M → Dakika
+%S → Saniye
+%A → Gün Adı (Monday, Tuesday vs.)
+%B → Ay Adı (March, April vs.)
+📌 2. date Modülü (Sadece Tarih İçin)
+Bazı işlemlerde sadece tarih bilgisi yeterli olabilir.
+
+📌 2.1 Şu Anki Tarihi Alma
+python
+Kopyala
+Düzenle
+from datetime import date
+
+bugun = date.today()
+print(bugun)  # Örn: 2025-03-03
+📌 2.2 Belirli Bir Tarih Oluşturma
+python
+Kopyala
+Düzenle
+tarih = date(2023, 12, 31)
+print(tarih)  # 2023-12-31
+📌 2.3 Tarih Farkı (İki Tarih Arasındaki Gün Sayısı)
+python
+Kopyala
+Düzenle
+tarih1 = date(2023, 1, 1)
+tarih2 = date(2025, 3, 3)
+
+fark = tarih2 - tarih1
+print(fark.days)  # 792 gün
+📌 3. time Modülü (Sadece Saat İçin)
+Sadece saat ve zaman bilgileriyle çalışmak için time modülü kullanılır.
+
+📌 3.1 Belirli Bir Saat Oluşturma
+python
+Kopyala
+Düzenle
+from datetime import time
+
+saat = time(14, 30, 15)
+print(saat)  # 14:30:15
+📌 3.2 Şu Anki Zamanı Bekletme (sleep)
+python
+Kopyala
+Düzenle
+import time
+
+print("3 saniye bekliyor...")
+time.sleep(3)  # 3 saniye bekler
+print("Devam ediyor...")
+📌 4. timedelta (Tarih ve Saatler Arasında Fark)
+Tarih işlemlerinde ekleme veya çıkarma yapmak için timedelta kullanılır.
+
+📌 4.1 Gün Ekleme & Çıkarma
+python
+Kopyala
+Düzenle
+from datetime import datetime, timedelta
+
+bugun = datetime.now()
+bir_hafta_sonra = bugun + timedelta(days=7)
+print(bir_hafta_sonra)  # 7 gün sonraki tarih
+📌 4.2 Saat, Dakika, Saniye Ekleme
+python
+Kopyala
+Düzenle
+saat_sonra = bugun + timedelta(hours=3, minutes=30)
+print(saat_sonra)  # 3 saat 30 dakika sonrası
+📌 5. calendar Modülü (Takvim İşlemleri)
+Eğer bir takvim oluşturmak istiyorsan, calendar modülü yardımcı olur.
+
+📌 5.1 Belirli Bir Yılın Takvimini Yazdırma
+python
+Kopyala
+Düzenle
+import calendar
+
+print(calendar.calendar(2025))
+📌 5.2 Belirli Bir Ayın Takvimini Yazdırma
+python
+Kopyala
+Düzenle
+print(calendar.month(2025, 3))  # Mart 2025'in takvimi
+📌 5.3 Bir Günün Haftanın Kaçıncı Günü Olduğunu Bulma
+python
+Kopyala
+Düzenle
+print(calendar.weekday(2025, 3, 3))  # 0: Pazartesi, 6: Pazar
+📌 6. dateutil Modülü (Gelişmiş Tarih İşlemleri)
+dateutil modülü Python'un dahili modüllerine ek olarak daha gelişmiş tarih işlemleri sağlar. (Önce yüklenmesi gerekir: pip install python-dateutil)
+
+📌 6.1 Tarihleri Otomatik Tanıma
+python
+Kopyala
+Düzenle
+from dateutil import parser
+
+tarih = parser.parse("15 Mart 2025")
+print(tarih)  # 2025-03-15 00:00:00
+📌 6.2 Ay Sonunu Bulma
+python
+Kopyala
+Düzenle
+from dateutil.relativedelta import relativedelta
+from datetime import datetime
+
+tarih = datetime(2025, 2, 15)
+ay_sonu = tarih + relativedelta(day=31)
+print(ay_sonu)  # 2025-02-28 (Şubat ayının son günü)
+Özet: Python'da Tarih İşlemleri 🚀
+Modül	İşlev
+datetime	Genel tarih & saat işlemleri
+date	Sadece tarih işlemleri
+time	Sadece saat işlemleri
+timedelta	Tarih-saat farkı hesaplama
+calendar	Takvim işlemleri
+dateutil	Gelişmiş tarih işlemleri
+Eğer sadece tarihi işlemek istiyorsan date, saatle çalışıyorsan time, takvim istiyorsan calendar kullanmalısın. Daha gelişmiş işlemler için dateutil oldukça faydalıdır. 🔥
+
+Bu bilgilerle tarih ve saat işlemlerinde uzman olabilirsin! 🏆 😎 Hangi işlemi yapmak istiyorsan bana söyle, sana kod örneği vereyim. 🚀
+
+
+
+
+
+
+
+Şunu dedin:
+strftime() foksiyonu ile kullanılabilen biçimlendiriciler neler hepsi
+ChatGPT:
+Python'daki strftime() fonksiyonu, tarih ve saat bilgilerini belirli bir formatta yazdırmak için kullanılır. İşte strftime() ile kullanılabilen tüm biçimlendiriciler:
+
+📌 Tarih Biçimlendiricileri
+Biçim	Açıklama	Örnek Çıktı (03 Mart 2025, Pazartesi)
+%Y	4 basamaklı yıl	2025
+%y	2 basamaklı yıl	25
+%m	Ay (01-12)	03
+%B	Ay adı (Uzun)	Mart
+%b	Ay adı (Kısa)	Mar
+%d	Gün (01-31)	03
+%A	Gün adı (Uzun)	Pazartesi
+%a	Gün adı (Kısa)	Pzt
+%w	Haftanın günü (0: Pazar, 6: Cumartesi)	1
+%j	Yılın kaçıncı günü (001-366)	062
+%U	Yılın kaçıncı haftası (Pazar başlangıç)	09
+%W	Yılın kaçıncı haftası (Pazartesi başlangıç)	09
+🕒 Saat Biçimlendiricileri
+Biçim	Açıklama	Örnek Çıktı (14:45:30)
+%H	24 saatlik saat (00-23)	14
+%I	12 saatlik saat (01-12)	02
+%M	Dakika (00-59)	45
+%S	Saniye (00-59)	30
+%p	AM / PM	PM
+⏳ Zaman Dilimi & Tam Zaman
+Biçim	Açıklama	Örnek
+%Z	Zaman dilimi	UTC
+%z	UTC offset (+/-HHMM)	+0300
+%c	Tam tarih ve saat	Mon Mar 3 14:45:30 2025
+%x	Yerel tarih formatı	03/03/25
+%X	Yerel saat formatı	14:45:30
+🛠 Örnek Kullanım
+python
+Kopyala
+Düzenle
+from datetime import datetime
+
+simdi = datetime.now()
+
+# Farklı formatlarda tarih ve saat gösterimi
+print(simdi.strftime("%Y-%m-%d %H:%M:%S"))  # 2025-03-03 14:45:30
+print(simdi.strftime("%d %B %Y, %A"))       # 03 Mart 2025, Pazartesi
+print(simdi.strftime("%I:%M %p"))           # 02:45 PM
+
+
+
+
+
+
+

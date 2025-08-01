@@ -1,0 +1,34 @@
+import random
+
+def KelimeEkle(Liste, kelime, indeks):
+    if indeks < 0:
+        indeks = 0
+    elif indeks > len(Liste):
+        indeks = len(Liste)
+    Liste.insert(indeks, kelime)
+
+def HikayeyiYaz(Liste):
+    global YeniHikaye
+    if not Liste:
+        print(YeniHikaye.strip())
+        return
+    
+    RastGeleIndeks = random.randint(0, len(Liste) - 1)
+    RastGeleKelime = Liste.pop(RastGeleIndeks)
+    YeniHikaye += ' ' + RastGeleKelime
+    HikayeyiYaz(Liste)
+
+Hikaye = [
+    "Güneş", "ufuk", "kaybolmak",
+    "Rüzgar", "yaprak", "dans",
+    "Çocuk", "balon", "tutmak",
+    "Aniden", "balon", "gökyüzü", "yükselmek",
+    "Çocuk", "gülümsemek", "bakmak"
+]
+
+YeniHikaye = ""
+
+# Örnek kullanım
+KelimeEkle(Hikaye, "mutluluk", 3)
+KelimeEkle(Hikaye, "neşe", 7)
+HikayeyiYaz(Hikaye)

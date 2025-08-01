@@ -1,0 +1,227 @@
+📌 Python Dosya İşlemleri (f.open, f.close, with open, encoding, seek, vb.)
+1️⃣ Dosya Açma (open())
+Python'da bir dosya açmak için open() fonksiyonu kullanılır. Modlar belirlenerek dosyanın nasıl açılacağı seçilir.
+
+
+f = open("dosya.txt", "r", encoding="utf-8")  # "dosya.txt" adlı dosyayı okuma modunda açar.
+📜 Dosya Açma Modları (Mode)
+Mod	Açıklama
+"r"	Okuma modu (Dosya yoksa hata verir).
+"w"	Yazma modu (Var olan dosyayı sıfırlar).
+"a"	Eklemeli yazma modu (Mevcut dosyanın sonuna ekler).
+"x"	Yeni dosya oluşturur, varsa hata verir.
+"rb"	İkili (binary) okuma modu (Resim, PDF için).
+"wb"	İkili yazma modu (Mevcut dosyayı sıfırlar).
+2️⃣ Dosya Kapatma (close())
+Bir dosya işlemi bittiğinde kapamak önemlidir, yoksa bellek sızıntısı olabilir.
+
+
+f = open("dosya.txt", "r", encoding="utf-8")
+print(f.read())
+f.close()  # Dosyayı kapatır.
+3️⃣ with open() Kullanımı (Otomatik Kapatma)
+Python'da with open() kullanarak dosya işlemi yaparsan, close() çağırmana gerek kalmaz.
+
+
+with open("dosya.txt", "r", encoding="utf-8") as f:
+    içerik = f.read()
+    print(içerik)  # Dosya içeriğini yazdırır.
+
+# `with` bloğu bitince dosya otomatik kapanır.
+4️⃣ Dosya Okuma (read(), readline(), readlines())
+🔹 read(size): Tamamını veya belli karakter kadar okur
+
+with open("dosya.txt", "r", encoding="utf-8") as f:
+    print(f.read())  # Tüm içeriği okur.
+
+with open("dosya.txt", "r", encoding="utf-8") as f:
+    print(f.read(5))  # İlk 5 karakteri okur.
+🔹 readline(): Satır satır okuma
+
+with open("dosya.txt", "r", encoding="utf-8") as f:
+    print(f.readline())  # Sadece ilk satırı okur.
+🔹 readlines(): Tüm satırları liste olarak döndürme
+
+with open("dosya.txt", "r", encoding="utf-8") as f:
+    satırlar = f.readlines()
+    print(satırlar)  # ['Satır1\n', 'Satır2\n', 'Satır3\n']
+5️⃣ Dosya Yazma (write(), writelines())
+🔹 write(): Tek bir satır yazma
+
+with open("yeni_dosya.txt", "w", encoding="utf-8") as f:
+    f.write("Merhaba, bu bir test dosyasıdır.")
+⚠️ Not: "w" modu mevcut içeriği siler ve yeni içerik yazar.
+
+🔹 writelines(): Liste halinde yazma
+
+with open("yeni_dosya.txt", "w", encoding="utf-8") as f:
+    f.writelines(["Satır1\n", "Satır2\n", "Satır3\n"])
+🔹 "a" Modu ile Dosyanın Sonuna Eklemek
+python
+Kopyala
+Düzenle
+with open("yeni_dosya.txt", "a", encoding="utf-8") as f:
+    f.write("\nBu satır en sona eklendi!")
+⚠️ Not: "a" modu mevcut içeriği silmez, yeni satır ekler.
+
+6️⃣ Dosyada Konum Belirleme (seek(), tell())
+🔹 tell(): İmlecin nerede olduğunu gösterir
+python
+Kopyala
+Düzenle
+with open("dosya.txt", "r", encoding="utf-8") as f:
+    print(f.read(10))  # İlk 10 karakteri okur
+    print(f.tell())  # 10. konumdayız
+🔹 seek(): Belirli bir konuma gitmek
+
+with open("dosya.txt", "r", encoding="utf-8") as f:
+    f.seek(5)  # 5. karaktere gider
+    print(f.read(10))  # 5. karakterden itibaren 10 karakter okur.
+7️⃣ Dosya Durum Kontrolleri (f.closed)
+🔹 Dosyanın açık olup olmadığını kontrol etmek
+
+f = open("dosya.txt", "r", encoding="utf-8")
+print(f.closed)  # False (çünkü dosya açık)
+f.close()
+print(f.closed)  # True (çünkü dosya kapandı)
+8️⃣ Hata Yönetimi (try-except)
+🔹 Dosya yoksa hata almamak için FileNotFoundError kullan
+
+try:
+    with open("olmayan_dosya.txt", "r", encoding="utf-8") as f:
+        içerik = f.read()
+except FileNotFoundError:
+    print("Hata: Dosya bulunamadı!")
+9️⃣ Dosya İçeriğini Liste Olarak Kullanma (split())
+🔹 split() ile veriyi parçalamak
+
+with open("dosya.txt", "r", encoding="utf-8") as f:
+    satır = f.readline().strip()  # İlk satırı oku ve boşlukları temizle
+    parçalar = satır.split(",")  # Virgülle ayır
+    print(parçalar)  # ['Ali', '90', '85', '78']
+📌 Tüm Dosya Komutlarını Özetleyelim
+Komut	Açıklama
+open("dosya.txt", "r")	Dosyayı okuma modunda açar.
+open("dosya.txt", "w")	Dosyayı yazma modunda açar, sıfırlar.
+open("dosya.txt", "a")	Dosyanın sonuna ekleme yapar.
+f.read()	Tüm dosyayı okur.
+f.readline()	Bir satır okur.
+f.readlines()	Tüm satırları liste olarak döndürür.
+f.write("Metin")	Dosyaya yazar.
+f.writelines(liste)	Listeyi dosyaya yazar.
+f.tell()	Mevcut konumu gösterir.
+f.seek(5)	5. bayta gider.
+f.close()	Dosyayı kapatır.
+f.closed	Dosyanın kapalı olup olmadığını döndürür.
+try-except	Hata yönetimi sağlar.
+
+
+
+
+
+
+
+
+
+Python'da os ve shutil modülleri, işletim sistemi ile ilgili işlemler yapmak için kullanılır.
+Bunlar genellikle dosya ve dizin işlemleriyle ilgilidir. İşte her birinin ne işe yaradığını açıklayan
+detaylı bilgiler:
+
+📂 1. os Modülü (Operating System)
+os modülü, işletim sistemi ile etkileşim kurmak için kullanılır.
+
+🔹 1.1. os.getcwd()
+Geçerli çalışma dizinini (Current Working Directory) döndürür.
+Yani Python'un o an hangi klasörde çalıştığını gösterir.
+
+import os
+print(os.getcwd())  # Örneğin: C:\Users\Kullanici\Desktop
+🔹 1.2. os.path.join(path1, path2, ...)
+Dosya ve dizin yollarını sistemin desteklediği şekilde birleştirir.
+Farklı işletim sistemlerinde / ve \ gibi ayırıcıları otomatik olarak düzeltir.
+
+import os
+path = os.path.join("C:", "Users", "Kullanici", "Desktop")
+print(path)  # Windows: C:\Users\Kullanici\Desktop, Linux: C:/Users/Kullanici/Desktop
+🔹 1.3. os.path.exists(path)
+Belirtilen dosya veya dizinin var olup olmadığını kontrol eder.
+True (var) veya False (yok) döndürür.
+
+import os
+print(os.path.exists("test.txt"))  # Dosya varsa True, yoksa False
+🔹 1.4. os.path.isdir(path)
+Belirtilen yol bir klasör mü diye kontrol eder.
+
+import os
+print(os.path.isdir("C:/Users"))  # Klasörse True, değilse False
+🔹 1.5. os.mkdir(path)
+Tek bir klasör oluşturur.
+Eğer belirtilen klasör zaten varsa hata verir.
+
+import os
+os.mkdir("yeni_klasor")  # Bulunduğun dizinde 'yeni_klasor' oluşturur.
+🔹 1.6. os.makedirs(path)
+Birden fazla iç içe klasör oluşturur.
+Eğer klasörler varsa hata vermez.
+
+import os
+os.makedirs("ana_klasor/alt_klasor")  # İç içe klasörler oluşturur.
+🔹 1.7. os.rename(old_name, new_name)
+Bir dosyanın veya klasörün adını değiştirir.
+
+import os
+os.rename("eski_ad.txt", "yeni_ad.txt")  # 'eski_ad.txt' dosyasını 'yeni_ad.txt' olarak değiştirir.
+🔹 1.8. os.rmdir(path)
+Boş bir klasörü siler.
+Eğer klasör boş değilse hata verir.
+
+import os
+os.rmdir("bos_klasor")  # Klasör boşsa siler, doluysa hata verir.
+🔹 1.9. os.path.isfile(path)
+Belirtilen yolun bir dosya olup olmadığını kontrol eder.
+
+import os
+print(os.path.isfile("test.txt"))  # Dosyaysa True, değilse False
+🔹 1.10. os.remove(path)
+Bir dosyayı siler (Klasör silmek için os.rmdir() veya shutil.rmtree() kullanılır).
+
+import os
+os.remove("dosya.txt")  # 'dosya.txt' dosyasını siler.
+📂 2. shutil Modülü
+shutil modülü, os modülüne benzer ancak daha gelişmiş dosya ve klasör yönetimi işlemleri içerir.
+
+🔹 2.1. shutil.rmtree(path)
+Bir klasörü ve içindeki tüm alt klasör ve dosyalarla birlikte siler.
+
+import shutil
+shutil.rmtree("hepsi_silinir")  # 'hepsi_silinir' klasörünü tamamen siler.
+🔹 2.2. shutil.copy(src, dst)
+Bir dosyayı başka bir konuma kopyalar.
+
+import shutil
+shutil.copy("ornek.txt", "yedek.txt")  # 'ornek.txt' dosyasını 'yedek.txt' olarak kopyalar.
+🔹 2.3. shutil.move(src, dst)
+Bir dosyayı veya klasörü yeni bir konuma taşır.
+
+import shutil
+shutil.move("ornek.txt", "C:/Yeni_Klasor/")  # 'ornek.txt' dosyasını yeni klasöre taşır.
+🚀 Özet
+Fonksiyon	Açıklama
+os.getcwd()	Mevcut çalışma dizinini döndürür.
+os.path.join()	Dosya yollarını işletim sistemine uygun şekilde birleştirir.
+os.path.exists()	Belirtilen dosya veya klasörün var olup olmadığını kontrol eder.
+os.path.isdir()	Yolun klasör olup olmadığını kontrol eder.
+os.path.isfile()	Yolun dosya olup olmadığını kontrol eder.
+os.mkdir()	Tek bir klasör oluşturur.
+os.makedirs()	İç içe klasörler oluşturur.
+os.rename()	Bir dosya veya klasörün adını değiştirir.
+os.rmdir()	Boş bir klasörü siler.
+os.remove()	Bir dosyayı siler.
+shutil.rmtree()	Bir klasörü içindeki her şeyle birlikte siler.
+shutil.copy()	Bir dosyayı kopyalar.
+shutil.move()	Bir dosyayı veya klasörü taşır.
+Bunları kullanarak Python ile otomatik dosya yönetimi, yedekleme işlemleri ve sistem otomasyonları 
+yapabilirsin. 🚀
+
+
+

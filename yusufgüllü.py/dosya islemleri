@@ -1,0 +1,3 @@
+import os
+dizin = os.getcwdb()
+print(dizin)
